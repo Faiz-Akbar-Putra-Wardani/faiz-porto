@@ -9,6 +9,8 @@ const skills = [
   { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', tone: 'from-yellow-400/20 to-amber-500/5', border: 'border-yellow-300/20' },
   { name: 'Vue.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg', tone: 'from-emerald-500/20 to-cyan-500/5', border: 'border-emerald-400/20' },
   { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', tone: 'from-cyan-500/20 to-sky-500/5', border: 'border-cyan-400/20' },
+  { name: 'Express.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg', brighten: true, tone: 'from-slate-500/20 to-slate-500/5', border: 'border-slate-400/20' },
+  { name: 'MySQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg', tone: 'from-blue-500/20 to-orange-500/5', border: 'border-blue-400/20' },
 ]
 
 const experiences = [
@@ -18,7 +20,18 @@ const experiences = [
   { period: 'Mar 2024 — Feb 2025', role: 'Web Developer', company: 'Center of Excellence Software Development', location: 'Bandar Lampung', description: 'Berkolaborasi dalam merancang, mengimplementasikan, dan menguji fitur website yang aman, scalable, dan sesuai kebutuhan bisnis.' },
 ]
 
-const certifications = ['Junior Web Developer — VSGA', 'Front-End Web untuk Pemula', 'Pemrograman PHP', 'Dasar Pemrograman Web']
+const projects = [
+  { title: 'Microdata Landing Page & CMS', stack: 'Next.js · Laravel', description: 'Landing page perusahaan dengan dashboard admin untuk mengelola konten secara dinamis tanpa perubahan kode manual.' },
+  { title: 'ISP Customer Management System', stack: 'Laravel · MySQL · RESTful API', description: 'Sistem pengelolaan data pelanggan, langganan layanan, dan alur operasional untuk perusahaan Internet Service Provider.' },
+]
+
+const certifications = [
+  'Sertifikat Kompetensi BNSP — Junior Web Developer',
+  'Coding Camp 2025 powered by DBS Foundation',
+  'Front-End Web untuk Pemula',
+  'Pemrograman PHP',
+  'Dasar Pemrograman Web',
+]
 </script>
 
 <template>
@@ -30,7 +43,7 @@ const certifications = ['Junior Web Developer — VSGA', 'Front-End Web untuk Pe
           <p class="mb-5 font-mono text-xs uppercase tracking-[.24em] text-cyan-300">Web Developer · Bandar Lampung</p>
           <h1 class="font-display text-5xl font-semibold leading-[.98] tracking-[-.055em] text-white sm:text-7xl xl:text-[5.25rem]">Faiz Akbar<br /><span class="text-slate-400">Putra Wardani.</span></h1>
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-slate-400 sm:text-xl">Saya membangun antarmuka dan sistem web yang jelas, responsif, dan dapat dipelihara—dari pengalaman pengguna hingga layanan di baliknya.</p>
-          <div class="mt-9 flex flex-wrap gap-4"><a href="#pengalaman" class="primary-btn">Lihat pengalaman <span aria-hidden="true">↘</span></a><a href="mailto:faizbot81@gmail.com" class="secondary-btn">Hubungi saya</a></div>
+          <div class="mt-9 flex flex-wrap gap-4"><a href="#pengalaman" class="primary-btn">Lihat pengalaman <span aria-hidden="true">↘</span></a><a href="mailto:faizakbarputrawardani2@gmail.com" class="secondary-btn">Hubungi saya</a></div>
         </div>
         <div class="relative mx-auto mt-6 w-full max-w-[570px] self-end lg:mt-0">
           <div class="absolute inset-x-[14%] bottom-[8%] h-[60%] rounded-full bg-cyan-400/15 blur-[70px]"></div>
@@ -51,14 +64,14 @@ const certifications = ['Junior Web Developer — VSGA', 'Front-End Web untuk Pe
           <p class="text-lg leading-8 text-slate-300">Saya adalah lulusan <b class="text-white">Informatika Universitas Teknokrat Indonesia</b> dengan minat kuat pada Web Development dan Software Engineering.</p>
           <p class="mt-5 leading-7 text-slate-400">Perjalanan saya berkembang lewat bootcamp, pembelajaran mandiri, mengajar, dan pengalaman industri. Saya terbiasa membangun aplikasi dari antarmuka hingga API—menggunakan HTML, CSS, JavaScript, PHP, Laravel, Express.js, dan teknologi web modern lainnya.</p>
           <p class="mt-5 leading-7 text-slate-400">Bagi saya, teknologi adalah cara mengubah masalah rumit menjadi pengalaman yang terasa sederhana bagi pengguna.</p>
-          <div class="mt-8 border-t border-white/10 pt-6"><b class="block text-sm font-semibold text-white">Sarjana Informatika</b><span class="mt-1 block text-sm text-slate-500">Universitas Teknokrat Indonesia · 2026</span></div>
+          <div class="mt-8 grid gap-5 border-t border-white/10 pt-6 sm:grid-cols-2"><div><b class="block text-sm font-semibold text-white">Sarjana Informatika</b><span class="mt-1 block text-sm text-slate-500">Universitas Teknokrat Indonesia · 2022–2026</span></div><div><b class="block text-sm font-semibold text-white">IPK 3,76</b><span class="mt-1 block text-sm text-slate-500">Lulus Februari 2026</span></div></div>
         </div>
       </div>
     </section>
 
     <section id="keahlian" class="section-shell pt-8">
       <div class="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p class="eyebrow">02 — Keahlian</p><h2 class="section-title">Teknologi yang saya gunakan.</h2></div><p class="max-w-md text-sm leading-6 text-slate-500">Perangkat kerja untuk membangun antarmuka, aplikasi server, dan produk web end-to-end.</p></div>
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9">
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-11">
         <div v-for="skill in skills" :key="skill.name" class="skill-card" :class="[skill.border, `bg-gradient-to-br ${skill.tone}`]">
           <img v-if="skill.logo" :src="skill.logo" :alt="`Logo ${skill.name}`" class="h-11 w-11 object-contain" :class="{ invert: skill.invert, 'brightness-0 invert': skill.brighten }" loading="lazy" />
           <span v-else class="font-mono text-2xl font-black text-cyan-200">{{ skill.icon }}</span>
@@ -67,13 +80,24 @@ const certifications = ['Junior Web Developer — VSGA', 'Front-End Web untuk Pe
       </div>
     </section>
 
+    <section id="proyek" class="section-shell pt-8">
+      <div class="mb-10"><p class="eyebrow">03 — Proyek pilihan</p><h2 class="section-title">Pekerjaan yang pernah saya bangun.</h2></div>
+      <div class="grid gap-5 md:grid-cols-2">
+        <article v-for="project in projects" :key="project.title" class="glass-card p-7 sm:p-8">
+          <p class="font-mono text-xs font-semibold uppercase tracking-[.14em] text-cyan-300">{{ project.stack }}</p>
+          <h3 class="mt-4 font-display text-2xl font-semibold text-white">{{ project.title }}</h3>
+          <p class="mt-4 leading-7 text-slate-400">{{ project.description }}</p>
+        </article>
+      </div>
+    </section>
+
     <section id="pengalaman" class="section-shell">
-      <div><p class="eyebrow">03 — Pengalaman</p><h2 class="section-title">Perjalanan profesional.</h2></div>
+      <div><p class="eyebrow">04 — Pengalaman</p><h2 class="section-title">Perjalanan profesional.</h2></div>
       <div class="relative mx-auto mt-14 max-w-4xl"><div class="timeline-line"></div><article v-for="(item, index) in experiences" :key="item.role + item.company" class="timeline-item"><div class="timeline-dot" :class="item.current ? 'current' : ''"><span>{{ String(index + 1).padStart(2, '0') }}</span></div><div class="glass-card group p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/25 sm:p-8"><div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-start"><div><h3 class="font-display text-xl font-extrabold text-white sm:text-2xl">{{ item.role }}</h3><p class="mt-1 font-bold text-cyan-300">{{ item.company }}</p></div><span class="self-start rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-400">{{ item.period }}</span></div><p class="mt-5 leading-7 text-slate-400">{{ item.description }}</p><p class="mt-4 text-xs font-semibold text-slate-600">⌖ {{ item.location }}</p></div></article></div>
     </section>
 
-    <section class="section-shell pt-0"><div class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div class="glass-card relative overflow-hidden p-8"><p class="eyebrow">Pelatihan</p><h3 class="font-display text-2xl font-semibold text-white">Coding Camp powered by DBS Foundation</h3><p class="mt-2 text-sm font-semibold text-cyan-300">Front-End & Back-End Developer Cohort · 2025</p><p class="mt-5 max-w-2xl leading-7 text-slate-400">Program intensif yang memperkuat fundamental hingga advanced web development, Node.js, API, kolaborasi tim, dan integrasi Machine Learning dalam Capstone Project.</p></div><div class="glass-card p-8"><p class="eyebrow">Sertifikasi</p><ul class="divide-y divide-white/[.07]"><li v-for="cert in certifications" :key="cert" class="py-3 text-sm text-slate-300">{{ cert }}</li></ul></div></div></section>
+    <section class="section-shell pt-0"><div class="grid gap-5 lg:grid-cols-2"><div class="space-y-5"><div class="glass-card relative overflow-hidden p-8"><p class="eyebrow">Pelatihan</p><h3 class="font-display text-2xl font-semibold text-white">Coding Camp powered by DBS Foundation</h3><p class="mt-2 text-sm font-semibold text-cyan-300">Front-End & Back-End Developer Cohort · 2025</p><p class="mt-5 max-w-2xl leading-7 text-slate-400">Program intensif yang memperkuat fundamental hingga advanced web development, Node.js, API, kolaborasi tim, dan integrasi Machine Learning dalam Capstone Project.</p></div><div class="glass-card p-8"><p class="eyebrow">Organisasi · 2024–2025</p><h3 class="font-display text-xl font-semibold text-white">Wakil Ketua UKM Programming Teknokrat</h3><p class="mt-4 leading-7 text-slate-400">Mengoordinasikan kegiatan organisasi, menginisiasi pelatihan pemrograman, dan mendukung pengembangan kompetensi anggota.</p></div></div><div class="glass-card p-8"><p class="eyebrow">Sertifikasi</p><ul class="divide-y divide-white/[.07]"><li v-for="cert in certifications" :key="cert" class="py-4 text-sm text-slate-300">{{ cert }}</li></ul><div class="mt-7 border-t border-white/10 pt-6"><p class="eyebrow">Kemampuan profesional</p><p class="text-sm leading-7 text-slate-400">Analisis kebutuhan sistem · Database management · Kerja sama tim · Pemecahan masalah · Manajemen waktu</p></div></div></div></section>
 
-    <section id="kontak" class="px-5 pb-10 pt-10 lg:px-8"><div class="contact-card mx-auto max-w-7xl overflow-hidden px-6 py-16 sm:px-12 sm:py-20"><p class="eyebrow">04 — Kontak</p><div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"><div><h2 class="max-w-3xl font-display text-4xl font-semibold tracking-tight text-white sm:text-6xl">Mari bekerja bersama.</h2><p class="mt-5 max-w-xl leading-7 text-slate-400">Saya terbuka untuk diskusi mengenai proyek web, kolaborasi, dan peluang profesional.</p></div><div class="flex flex-wrap gap-4"><a href="mailto:faizbot81@gmail.com" class="primary-btn">Kirim email</a><a href="https://www.linkedin.com/in/faiz-akbar-putra-wardani" target="_blank" rel="noopener" class="secondary-btn">LinkedIn ↗</a></div></div></div><footer class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 py-8 text-xs text-slate-600 sm:flex-row"><span>© 2026 Faiz Akbar Putra Wardani.</span><span>Web Developer · Bandar Lampung</span></footer></section>
+    <section id="kontak" class="px-5 pb-10 pt-10 lg:px-8"><div class="contact-card mx-auto max-w-7xl overflow-hidden px-6 py-16 sm:px-12 sm:py-20"><p class="eyebrow">05 — Kontak</p><div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"><div><h2 class="max-w-3xl font-display text-4xl font-semibold tracking-tight text-white sm:text-6xl">Mari bekerja bersama.</h2><p class="mt-5 max-w-xl leading-7 text-slate-400">Saya terbuka untuk diskusi mengenai proyek web, kolaborasi, dan peluang profesional.</p><div class="mt-5 flex flex-col gap-2 text-sm text-slate-500 sm:flex-row sm:gap-6"><a href="mailto:faizakbarputrawardani2@gmail.com" class="transition hover:text-cyan-300">faizakbarputrawardani2@gmail.com</a><a href="tel:+6289503702003" class="transition hover:text-cyan-300">+62 895-0370-2003</a></div></div><div class="flex flex-wrap gap-4"><a href="mailto:faizakbarputrawardani2@gmail.com" class="primary-btn">Kirim email</a><a href="https://www.linkedin.com/in/faiz-akbar-putra-wardani" target="_blank" rel="noopener" class="secondary-btn">LinkedIn ↗</a></div></div></div><footer class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 py-8 text-xs text-slate-600 sm:flex-row"><span>© 2026 Faiz Akbar Putra Wardani.</span><span>Web Developer · Bandar Lampung</span></footer></section>
   </main>
 </template>

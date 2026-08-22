@@ -23,7 +23,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', handleScroll))
           <span class="font-display text-base font-extrabold tracking-wide">FAIZ<span class="text-cyan-300">.DEV</span></span>
         </a>
         <div class="hidden items-center gap-8 md:flex">
-          <a v-for="item in ['Tentang', 'Keahlian', 'Pengalaman', 'Kontak']" :key="item" :href="`#${item.toLowerCase()}`" class="nav-link">{{ item }}</a>
+          <a v-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item" :href="`#${item.toLowerCase()}`" class="nav-link">{{ item }}</a>
           <a href="/Profile.pdf" download class="rounded-full border border-cyan-300/40 px-5 py-2.5 text-sm font-bold text-cyan-200 transition hover:bg-cyan-300 hover:text-ink">Unduh CV</a>
         </div>
         <button class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 md:hidden" :aria-expanded="menuOpen" aria-label="Buka menu" @click="menuOpen = !menuOpen">
@@ -31,7 +31,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', handleScroll))
         </button>
       </nav>
       <div v-if="menuOpen" class="border-t border-white/10 bg-ink/95 px-5 py-5 backdrop-blur-xl md:hidden">
-        <a v-for="item in ['Tentang', 'Keahlian', 'Pengalaman', 'Kontak']" :key="item" :href="`#${item.toLowerCase()}`" class="block border-b border-white/5 py-3 text-sm font-bold text-slate-300" @click="closeMenu">{{ item }}</a>
+        <a v-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item" :href="`#${item.toLowerCase()}`" class="block border-b border-white/5 py-3 text-sm font-bold text-slate-300" @click="closeMenu">{{ item }}</a>
       </div>
     </header>
     <RouterView />
