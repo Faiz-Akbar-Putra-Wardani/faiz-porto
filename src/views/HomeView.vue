@@ -1,4 +1,12 @@
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+const matrixCanvas = ref(null)
+const heroVisual = ref(null)
+let animationFrame
+let revealObserver
+let removePointerEffects = () => {}
+
 const skills = [
   { name: 'Laravel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg', tone: 'from-rose-500/20 to-orange-500/5', border: 'border-rose-400/20' },
   { name: 'Next.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', invert: true, tone: 'from-slate-300/15 to-transparent', border: 'border-slate-300/20' },
@@ -28,24 +36,107 @@ const projects = [
 const certifications = [
   'Sertifikat Kompetensi BNSP — Junior Web Developer',
   'Coding Camp 2025 powered by DBS Foundation',
-  'Front-End Web untuk Pemula',
-  'Pemrograman PHP',
-  'Dasar Pemrograman Web',
 ]
+
+const achievements = [
+  'Juara 1 Pemrograman Mobile — Teknokrat Academic Expo 2025',
+  'Juara 1 Pemrograman Game — Teknokrat Academic Expo 2025',
+  'Juara 1 AR/VR — Teknokrat Academic Expo 2025',
+]
+
+onMounted(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const canvas = matrixCanvas.value
+  const context = canvas?.getContext('2d')
+
+  if (canvas && context && !reduceMotion) {
+    const symbols = '01{}[]<>/;constvuejsphpnode'.split('')
+    let columns = []
+    const fontSize = 14
+
+    const resizeCanvas = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
+      canvas.width = window.innerWidth * ratio
+      canvas.height = window.innerHeight * ratio
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      context.setTransform(ratio, 0, 0, ratio, 0, 0)
+      columns = Array.from({ length: Math.ceil(window.innerWidth / 26) }, () => Math.random() * -60)
+    }
+
+    let lastDraw = 0
+    const drawMatrix = (time) => {
+      animationFrame = requestAnimationFrame(drawMatrix)
+      if (time - lastDraw < 70) return
+      lastDraw = time
+      context.fillStyle = 'rgba(7, 11, 20, 0.08)'
+      context.fillRect(0, 0, window.innerWidth, window.innerHeight)
+      context.font = `${fontSize}px JetBrains Mono`
+      columns.forEach((position, index) => {
+        context.fillStyle = index % 5 === 0 ? 'rgba(167,139,250,.24)' : 'rgba(103,232,249,.2)'
+        context.fillText(symbols[Math.floor(Math.random() * symbols.length)], index * 26, position * fontSize)
+        columns[index] = position * fontSize > window.innerHeight && Math.random() > 0.985 ? 0 : position + 0.45
+      })
+    }
+
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+    animationFrame = requestAnimationFrame(drawMatrix)
+
+    const handlePointer = (event) => {
+      document.documentElement.style.setProperty('--cursor-x', `${event.clientX}px`)
+      document.documentElement.style.setProperty('--cursor-y', `${event.clientY}px`)
+      if (heroVisual.value && window.innerWidth >= 768) {
+        const x = (event.clientX / window.innerWidth - 0.5) * 10
+        const y = (event.clientY / window.innerHeight - 0.5) * 8
+        heroVisual.value.style.setProperty('--parallax-x', `${x}px`)
+        heroVisual.value.style.setProperty('--parallax-y', `${y}px`)
+      }
+    }
+    window.addEventListener('pointermove', handlePointer, { passive: true })
+    removePointerEffects = () => {
+      window.removeEventListener('resize', resizeCanvas)
+      window.removeEventListener('pointermove', handlePointer)
+    }
+  }
+
+  revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible')
+        revealObserver.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.12 })
+
+  document.querySelectorAll('section, .glass-card, .skill-card').forEach((element, index) => {
+    element.classList.add('reveal')
+    element.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 55}ms`)
+    revealObserver.observe(element)
+  })
+})
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(animationFrame)
+  revealObserver?.disconnect()
+  removePointerEffects()
+})
 </script>
 
 <template>
   <main>
     <section id="home" class="hero-grid relative flex min-h-screen items-center overflow-hidden pt-24">
+      <canvas ref="matrixCanvas" class="matrix-canvas" aria-hidden="true"></canvas>
+      <div class="scanlines" aria-hidden="true"></div>
       <div class="orb orb-one"></div><div class="orb orb-two"></div>
       <div class="mx-auto grid w-full max-w-7xl items-center gap-4 px-5 pb-10 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
         <div class="relative z-10 pt-12 lg:pt-0">
-          <p class="mb-5 font-mono text-xs uppercase tracking-[.24em] text-cyan-300">Web Developer · Bandar Lampung</p>
+          <p class="terminal-line mb-5 font-mono text-xs uppercase tracking-[.24em] text-cyan-300"><span class="terminal-prompt">faiz@portfolio:~$</span> Web Developer · Bandar Lampung<span class="terminal-caret"></span></p>
           <h1 class="font-display text-5xl font-semibold leading-[.98] tracking-[-.055em] text-white sm:text-7xl xl:text-[5.25rem]">Faiz Akbar<br /><span class="text-slate-400">Putra Wardani.</span></h1>
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-slate-400 sm:text-xl">Saya membangun antarmuka dan sistem web yang jelas, responsif, dan dapat dipelihara—dari pengalaman pengguna hingga layanan di baliknya.</p>
           <div class="mt-9 flex flex-wrap gap-4"><a href="#pengalaman" class="primary-btn">Lihat pengalaman <span aria-hidden="true">↘</span></a><a href="mailto:faizakbarputrawardani2@gmail.com" class="secondary-btn">Hubungi saya</a></div>
         </div>
-        <div class="relative mx-auto mt-6 w-full max-w-[570px] self-end lg:mt-0">
+        <div ref="heroVisual" class="hero-visual relative mx-auto mt-6 w-full max-w-[570px] self-end lg:mt-0">
           <div class="absolute inset-x-[14%] bottom-[8%] h-[60%] rounded-full bg-cyan-400/15 blur-[70px]"></div>
           <div class="character-frame relative">
             <img src="/images/faiz-anime-developer.png" alt="Ilustrasi anime Faiz sebagai web developer" class="relative z-10 mx-auto max-h-[76vh] w-full object-contain object-bottom" />
@@ -96,7 +187,7 @@ const certifications = [
       <div class="relative mx-auto mt-14 max-w-4xl"><div class="timeline-line"></div><article v-for="(item, index) in experiences" :key="item.role + item.company" class="timeline-item"><div class="timeline-dot" :class="item.current ? 'current' : ''"><span>{{ String(index + 1).padStart(2, '0') }}</span></div><div class="glass-card group p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/25 sm:p-8"><div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-start"><div><h3 class="font-display text-xl font-extrabold text-white sm:text-2xl">{{ item.role }}</h3><p class="mt-1 font-bold text-cyan-300">{{ item.company }}</p></div><span class="self-start rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-400">{{ item.period }}</span></div><p class="mt-5 leading-7 text-slate-400">{{ item.description }}</p><p class="mt-4 text-xs font-semibold text-slate-600">⌖ {{ item.location }}</p></div></article></div>
     </section>
 
-    <section class="section-shell pt-0"><div class="grid gap-5 lg:grid-cols-2"><div class="space-y-5"><div class="glass-card relative overflow-hidden p-8"><p class="eyebrow">Pelatihan</p><h3 class="font-display text-2xl font-semibold text-white">Coding Camp powered by DBS Foundation</h3><p class="mt-2 text-sm font-semibold text-cyan-300">Front-End & Back-End Developer Cohort · 2025</p><p class="mt-5 max-w-2xl leading-7 text-slate-400">Program intensif yang memperkuat fundamental hingga advanced web development, Node.js, API, kolaborasi tim, dan integrasi Machine Learning dalam Capstone Project.</p></div><div class="glass-card p-8"><p class="eyebrow">Organisasi · 2024–2025</p><h3 class="font-display text-xl font-semibold text-white">Wakil Ketua UKM Programming Teknokrat</h3><p class="mt-4 leading-7 text-slate-400">Mengoordinasikan kegiatan organisasi, menginisiasi pelatihan pemrograman, dan mendukung pengembangan kompetensi anggota.</p></div></div><div class="glass-card p-8"><p class="eyebrow">Sertifikasi</p><ul class="divide-y divide-white/[.07]"><li v-for="cert in certifications" :key="cert" class="py-4 text-sm text-slate-300">{{ cert }}</li></ul><div class="mt-7 border-t border-white/10 pt-6"><p class="eyebrow">Kemampuan profesional</p><p class="text-sm leading-7 text-slate-400">Analisis kebutuhan sistem · Database management · Kerja sama tim · Pemecahan masalah · Manajemen waktu</p></div></div></div></section>
+    <section class="section-shell pt-0"><div class="grid gap-5 lg:grid-cols-2"><div class="space-y-5"><div class="glass-card relative overflow-hidden p-8"><p class="eyebrow">Pelatihan</p><h3 class="font-display text-2xl font-semibold text-white">Coding Camp powered by DBS Foundation</h3><p class="mt-2 text-sm font-semibold text-cyan-300">Front-End & Back-End Developer Cohort · 2025</p><p class="mt-5 max-w-2xl leading-7 text-slate-400">Program intensif yang memperkuat fundamental hingga advanced web development, Node.js, API, kolaborasi tim, dan integrasi Machine Learning dalam Capstone Project.</p></div><div class="glass-card p-8"><p class="eyebrow">Organisasi · 2024–2025</p><h3 class="font-display text-xl font-semibold text-white">Wakil Ketua UKM Programming Teknokrat</h3><p class="mt-4 leading-7 text-slate-400">Mengoordinasikan kegiatan organisasi, menginisiasi pelatihan pemrograman, dan mendukung pengembangan kompetensi anggota.</p></div></div><div class="space-y-5"><div class="glass-card p-8"><p class="eyebrow">Prestasi</p><ul class="divide-y divide-white/[.07]"><li v-for="achievement in achievements" :key="achievement" class="flex gap-3 py-4 text-sm text-slate-300"><span class="font-mono font-bold text-cyan-300">01</span><span>{{ achievement }}</span></li></ul></div><div class="glass-card p-8"><p class="eyebrow">Sertifikasi</p><ul class="divide-y divide-white/[.07]"><li v-for="cert in certifications" :key="cert" class="py-4 text-sm text-slate-300">{{ cert }}</li></ul><div class="mt-7 border-t border-white/10 pt-6"><p class="eyebrow">Kemampuan profesional</p><p class="text-sm leading-7 text-slate-400">Analisis kebutuhan sistem · Database management · Kerja sama tim · Pemecahan masalah · Manajemen waktu</p></div></div></div></div></section>
 
     <section id="kontak" class="px-5 pb-10 pt-10 lg:px-8"><div class="contact-card mx-auto max-w-7xl overflow-hidden px-6 py-16 sm:px-12 sm:py-20"><p class="eyebrow">05 — Kontak</p><div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end"><div><h2 class="max-w-3xl font-display text-4xl font-semibold tracking-tight text-white sm:text-6xl">Mari bekerja bersama.</h2><p class="mt-5 max-w-xl leading-7 text-slate-400">Saya terbuka untuk diskusi mengenai proyek web, kolaborasi, dan peluang profesional.</p><div class="mt-5 flex flex-col gap-2 text-sm text-slate-500 sm:flex-row sm:gap-6"><a href="mailto:faizakbarputrawardani2@gmail.com" class="transition hover:text-cyan-300">faizakbarputrawardani2@gmail.com</a><a href="tel:+6289503702003" class="transition hover:text-cyan-300">+62 895-0370-2003</a></div></div><div class="flex flex-wrap gap-4"><a href="mailto:faizakbarputrawardani2@gmail.com" class="primary-btn">Kirim email</a><a href="https://www.linkedin.com/in/faiz-akbar-putra-wardani" target="_blank" rel="noopener" class="secondary-btn">LinkedIn ↗</a></div></div></div><footer class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 py-8 text-xs text-slate-600 sm:flex-row"><span>© 2026 Faiz Akbar Putra Wardani.</span><span>Web Developer · Bandar Lampung</span></footer></section>
   </main>

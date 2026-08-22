@@ -50,8 +50,219 @@
   box-shadow: none;
 }
 
+.glass-card li.flex {
+  counter-increment: achievement;
+}
+
+.glass-card ul:has(li.flex) {
+  counter-reset: achievement;
+}
+
+.glass-card li.flex > .font-mono:first-child {
+  font-size: 0;
+}
+
+.glass-card li.flex > .font-mono:first-child::after {
+  content: counter(achievement, decimal-leading-zero);
+  font-size: 0.875rem;
+}
+
 .character-frame .float-card:last-child {
   animation-delay: -2s;
+}
+
+/* Hacker-anime motion system */
+body::after {
+  content: '';
+  position: fixed;
+  z-index: 80;
+  left: var(--cursor-x, -100px);
+  top: var(--cursor-y, -100px);
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103, 232, 249, 0.075), transparent 65%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.matrix-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.45;
+  mask-image: linear-gradient(to right, transparent 0%, black 45%, black 100%);
+  pointer-events: none;
+}
+
+.scanlines {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: 0.11;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(103, 232, 249, 0.11) 4px);
+  background-size: 100% 5px;
+  pointer-events: none;
+  animation: scan-drift 12s linear infinite;
+}
+
+.terminal-prompt {
+  margin-right: 0.65rem;
+  color: #64748b;
+}
+
+.terminal-caret {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1em;
+  margin-left: 0.4rem;
+  vertical-align: -0.12em;
+  background: #67e8f9;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.hero-visual {
+  transform: translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0);
+  transition: transform 180ms ease-out;
+}
+
+.hero-visual img {
+  animation: anime-arrival 1.15s cubic-bezier(0.16, 1, 0.3, 1) both, character-breathe 5.5s ease-in-out 1.15s infinite;
+}
+
+.character-frame::before {
+  content: '';
+  position: absolute;
+  z-index: 12;
+  inset: 8% 5%;
+  border-block: 1px solid rgba(103, 232, 249, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  animation: character-scan 4.5s ease-in-out 1.2s infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms ease var(--reveal-delay, 0ms), transform 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glass-card,
+.skill-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::after,
+.skill-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(103, 232, 249, 0.075) 49%, transparent 68%);
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::after,
+.skill-card:hover::after {
+  transform: translateX(120%);
+}
+
+.skill-card img {
+  filter: drop-shadow(0 0 0 transparent);
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+.skill-card img.invert,
+.skill-card img.brightness-0 {
+  filter: invert(1);
+}
+
+.skill-card:hover img {
+  transform: translateY(-4px) scale(1.08);
+  filter: drop-shadow(0 6px 12px rgba(103, 232, 249, 0.2));
+}
+
+.skill-card:hover img.invert,
+.skill-card:hover img.brightness-0 {
+  filter: invert(1) drop-shadow(0 6px 12px rgba(103, 232, 249, 0.25));
+}
+
+.timeline-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 80px;
+  border-radius: 10px;
+  background: linear-gradient(transparent, #67e8f9, transparent);
+  animation: timeline-pulse 3.8s ease-in-out infinite;
+}
+
+.timeline-dot.current {
+  animation: current-pulse 2.4s ease-in-out infinite;
+}
+
+.primary-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.7), transparent 75%);
+  transform: translateX(-120%);
+}
+
+.primary-btn:hover::after {
+  animation: button-sweep 650ms ease;
+}
+
+@keyframes scan-drift {
+  to { transform: translateY(10px); }
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes anime-arrival {
+  from { opacity: 0; transform: translateY(45px) scale(0.96); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes character-breathe {
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes character-scan {
+  0%, 20% { opacity: 0; transform: translateY(-30%); }
+  35% { opacity: 0.8; }
+  65% { opacity: 0.25; }
+  80%, 100% { opacity: 0; transform: translateY(55%); }
+}
+
+@keyframes timeline-pulse {
+  from { transform: translateY(-80px); }
+  to { transform: translateY(620px); }
+}
+
+@keyframes current-pulse {
+  50% { box-shadow: 0 0 0 7px #070b14, 0 0 32px rgba(34, 211, 238, 0.42); }
+}
+
+@keyframes button-sweep {
+  to { transform: translateX(120%); }
 }
 
 @media (max-width: 639px) {
@@ -80,5 +291,32 @@
 
   .float-card-stack {
     margin-right: 0.25rem;
+  }
+
+  .matrix-canvas {
+    opacity: 0.25;
+    mask-image: linear-gradient(to bottom, transparent, black 45%, transparent);
+  }
+
+  body::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-visual,
+  .hero-visual img,
+  .character-frame::before,
+  .scanlines,
+  .terminal-caret,
+  .timeline-line::after,
+  .timeline-dot.current {
+    animation: none !important;
+    transform: none;
   }
 }
