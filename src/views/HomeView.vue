@@ -50,7 +50,7 @@ const certifications = [
           <div class="character-frame relative">
             <img src="/images/faiz-anime-developer.png" alt="Ilustrasi anime Faiz sebagai web developer" class="relative z-10 mx-auto max-h-[76vh] w-full object-contain object-bottom" />
             <div class="float-card float-card-clean left-0 top-[25%] flex sm:left-1 sm:top-[28%]"><span class="text-cyan-300">&lt;/&gt;</span><div><b>Clean Code</b><small>Every commit counts</small></div></div>
-            <div class="float-card float-card-stack right-0 top-[55%] flex sm:top-[52%]"><span class="text-violet-300">⚡</span><div><b>Full Stack</b><small>Idea to production</small></div></div>
+            <div class="float-card float-card-stack right-0 top-[55%] flex sm:top-[52%]"><span class="text-violet-300">&lt;/&gt;</span><div><b>Web Development</b><small>Frontend to backend</small></div></div>
           </div>
         </div>
       </div>
