@@ -53,3 +53,32 @@
 .character-frame .float-card:last-child {
   animation-delay: -2s;
 }
+
+@media (max-width: 639px) {
+  .character-frame .float-card {
+    gap: 0.5rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 0.65rem;
+    background: rgba(9, 15, 28, 0.88);
+  }
+
+  .character-frame .float-card > span {
+    font-size: 0.8rem;
+  }
+
+  .character-frame .float-card b {
+    font-size: 0.58rem;
+  }
+
+  .character-frame .float-card small {
+    font-size: 0.48rem;
+  }
+
+  .float-card-clean {
+    margin-left: 0.25rem;
+  }
+
+  .float-card-stack {
+    margin-right: 0.25rem;
+  }
+}
