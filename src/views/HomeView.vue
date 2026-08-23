@@ -125,9 +125,9 @@ onBeforeUnmount(() => {
 
 <template>
   <main>
+    <canvas ref="matrixCanvas" class="matrix-canvas" aria-hidden="true"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
     <section id="home" class="hero-grid relative flex min-h-screen items-center overflow-hidden pt-24">
-      <canvas ref="matrixCanvas" class="matrix-canvas" aria-hidden="true"></canvas>
-      <div class="scanlines" aria-hidden="true"></div>
       <div class="orb orb-one"></div><div class="orb orb-two"></div>
       <div class="mx-auto grid w-full max-w-7xl items-center gap-4 px-5 pb-10 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
         <div class="relative z-10 pt-12 lg:pt-0">
