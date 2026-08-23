@@ -31,6 +31,10 @@ const experiences = [
 const projects = [
   { title: 'Microdata Landing Page & CMS', stack: 'Next.js · Laravel', description: 'Landing page perusahaan dengan dashboard admin untuk mengelola konten secara dinamis tanpa perubahan kode manual.' },
   { title: 'ISP Customer Management System', stack: 'Laravel · MySQL · RESTful API', description: 'Sistem pengelolaan data pelanggan, langganan layanan, dan alur operasional untuk perusahaan Internet Service Provider.' },
+  { title: 'Sinar Elektro Sejahtera', stack: 'Company Profile · Admin Dashboard · CMS', description: 'Landing page perusahaan yang dilengkapi dashboard admin untuk mengelola profil, layanan, informasi, dan konten website secara terpusat.' },
+  { title: 'Sistem Informasi Siswa SPN Polda Lampung', stack: 'Student Information System', description: 'Aplikasi sistem informasi untuk membantu pengelolaan data siswa SPN Polda Lampung agar pencatatan, pencarian, dan penyajian informasi lebih terstruktur.' },
+  { title: 'SPK Penentuan Siswa Berprestasi', stack: 'Decision Support System', description: 'Sistem pendukung keputusan untuk membantu sekolah menilai dan menentukan siswa berprestasi berdasarkan kriteria serta bobot penilaian yang telah ditetapkan.' },
+  { title: 'Laundry Management System', stack: 'Business Management System', description: 'Aplikasi web untuk mengelola pelanggan, transaksi, layanan laundry, status pengerjaan, pembayaran, dan laporan operasional dalam satu sistem.' },
 ]
 
 const certifications = [
